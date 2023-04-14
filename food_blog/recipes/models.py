@@ -16,12 +16,12 @@ class Recipe(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_slug': self.slug})
+        return reverse('show_post', kwargs={'post_slug': self.slug})
 
     class Meta:
         verbose_name = 'Recipe'
         verbose_name_plural = 'Recipe'
-        ordering = ['-time_create', 'title']
+        ordering = ['time_create', 'title']
 
 
 class Category(models.Model):
@@ -31,3 +31,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['-id']
