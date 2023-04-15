@@ -1,0 +1,173 @@
+{% extends 'recipes/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ****** Blog Area Start ****** -->
+<section class="blog_area section_padding_0_80">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="row">
+
+                    <!-- Single Post -->
+                    <div class="col-12">
+                        <div class="single-post wow fadeInUp" data-wow-delay=".2s">
+                            <!-- Post Thumb -->
+<!--                            <div class="post-thumb">-->
+<!--                                <img src="{% static 'img/blog-img/1.jpg' %}" alt="">-->
+<!--                            </div>-->
+                            <!-- Post Content -->
+<!--                            <div class="post-content">-->
+<!--                                <div class="post-meta d-flex">-->
+<!--                                    <div class="post-author-date-area d-flex">-->
+<!--                                        &lt;!&ndash; Post Author &ndash;&gt;-->
+<!--                                        <div class="post-author">-->
+<!--                                            <a href="#">By Marian</a>-->
+<!--                                        </div>-->
+<!--                                        &lt;!&ndash; Post Date &ndash;&gt;-->
+<!--                                        <div class="post-date">-->
+<!--                                            <a href="#">May 19, 2017</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash; Post Comment & Share Area &ndash;&gt;-->
+<!--                                    <div class="post-comment-share-area d-flex">-->
+<!--                                        &lt;!&ndash; Post Favourite &ndash;&gt;-->
+<!--                                        <div class="post-favourite">-->
+<!--                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>-->
+<!--                                        </div>-->
+<!--                                        &lt;!&ndash; Post Comments &ndash;&gt;-->
+<!--                                        <div class="post-comments">-->
+<!--                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>-->
+<!--                                        </div>-->
+<!--                                        &lt;!&ndash; Post Share &ndash;&gt;-->
+<!--                                        <div class="post-share">-->
+<!--                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <a href="#">-->
+<!--                                    <h2 class="post-headline"> Блог о вкусной и здоровой пищи</h2>-->
+<!--                                </a>-->
+<!--                                <p>Tiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,-->
+<!--                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea-->
+<!--                                    commodoconsequat.</p>-->
+<!--                                <a href="#" class="read-more">Continue Reading..</a>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+
+                    <!-- ******* List Blog Area Start ******* -->
+
+                    <!-- Single Post блюд -->
+                    {% for post in posts %}
+
+                    <div class="col-12">
+                        <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".2s">
+                            <!-- Post Thumb -->
+                            <div class="post-thumb">
+                                <img src="{{post.photo.url}}" alt="">
+                            </div>
+
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <div class="post-meta d-flex">
+                                    <div class="post-author-date-area d-flex">
+                                        <!-- Post Author -->
+                                        <div class="post-author">
+                                            <a href="#">{{ user.username }}</a>
+                                        </div>
+                                        <!-- Post Date -->
+                                        <div class="post-date">
+                                            <a href="#">{{ post.time_update|date:"D d M Y" }}</a>
+                                        </div>
+                                    </div>
+                                    <!-- Post Comment & Share Area -->
+                                    <div class="post-comment-share-area d-flex">
+                                        <!-- Post Favourite -->
+                                        <div class="post-favourite">
+                                            <a href="#"><i class="fa fa-podcast" aria-hidden="true"></i> {{ post.cat }}</a>
+                                        </div>
+<!--                                        <div class="post-favourite">-->
+<!--                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>-->
+<!--                                        </div>-->
+<!--                                        &lt;!&ndash; Post Comments &ndash;&gt;-->
+<!--                                        <div class="post-comments">-->
+<!--                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>-->
+<!--                                        </div>-->
+<!--                                        &lt;!&ndash; Post Share &ndash;&gt;-->
+<!--                                        <div class="post-share">-->
+<!--                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>-->
+<!--                                        </div>-->
+                                    </div>
+                                </div>
+                                <a href="{{ post.get_absolute_url }}">
+                                    <h4 class="post-headline">{{ post.title }}</h4>
+                                </a>
+                                <p>{{ post.content|truncatewords:20 }}</p>
+                                <a href="{{ post.get_absolute_url }}" class="read-more">Continue Reading..</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <!-- ****** Blog Sidebar ****** -->
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="blog-sidebar mt-5 mt-lg-0">
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area about-me-widget text-center">
+                        <div class="widget-title">
+                            <h6>About Me</h6>
+                        </div>
+                        <div class="about-me-widget-thumb">
+                            <img src="{% static 'img/about-img/1.jpg' %}" alt="">
+                        </div>
+                        <h4 class="font-shadow-into-light">Shopia Bernard</h4>
+                        <p> Я собираю самые вкусные и полезные рецепты </p>
+                    </div>
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area subscribe_widget text-center">
+                        <div class="widget-title">
+                            <h6>Subscribe &amp; Follow</h6>
+                        </div>
+                        <div class="subscribe-link">
+                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-google" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-vimeo" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area popular-post-widget">
+                        <div class="widget-title text-center">
+                            <h6>Populer Post</h6>
+                        </div>
+                        <!-- Single Popular Post -->
+                        {% for post in posts|dictsortreversed:"time_create"|slice:"5" %}
+                        <div class="single-populer-post d-flex">
+                            <img src="{{post.photo.url}}" alt="">
+                            <div class="post-content">
+                                <a href="#">
+                                    <h6>{{ post.title }}</h6>
+                                </a>
+                                <p>{{ post.time_update|date:"D d M Y" }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ****** Blog Area End ****** -->
+{% endblock %}
+

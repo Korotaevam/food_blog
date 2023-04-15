@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
 
 from recipes.forms import AddPostForm, RegisterUserForm, LoginUserForm
@@ -123,12 +124,17 @@ def logout_user(request):
 #     queryset = Recipe.objects.all()
 #     serializer_class = RecipeSerializer
 
+class RecipeAPIListPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'  # клиент сам меняет количество записей
+    max_page_size = 10000
+
 
 class RecipeAPIList(generics.ListCreateAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
-    # pagination_class = RecipeAPIListPagination
+    pagination_class = RecipeAPIListPagination
 
 
 class RecipeAPIUpdate(generics.RetrieveUpdateAPIView):
