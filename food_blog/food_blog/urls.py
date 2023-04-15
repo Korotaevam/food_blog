@@ -18,13 +18,32 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
 
-from recipes.views import pageNotFound
+from recipes.views import pageNotFound, RecipeAPIDestroy, RecipeAPIUpdate, RecipeAPIList
+
+# router = routers.DefaultRouter()
+# router.register(r'recipe', RecipeViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('recipes.urls')),
     path('captcha/', include('captcha.urls')),
+
+    # path('api/v1/', include(router.urls)),
+
+    path('api/v1/recipe/', RecipeAPIList.as_view()),
+    path('api/v1/recipe/<int:pk>/', RecipeAPIUpdate.as_view()),
+    path('api/v1/recipedelete/<int:pk>/', RecipeAPIDestroy.as_view()),
+
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
+
+    # path('api/v1/auth/', include('djoser.urls')),  # new
+    # re_path(r'^auth/', include('djoser.urls.authtoken')),  # new
+    # path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
 
 

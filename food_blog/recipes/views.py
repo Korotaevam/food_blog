@@ -6,9 +6,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
 
 from recipes.forms import AddPostForm, RegisterUserForm, LoginUserForm
 from recipes.models import Recipe, Category
+from recipes.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
+from recipes.serializers import RecipeSerializer
 from recipes.utils import DataMixin
 
 
@@ -114,8 +117,28 @@ def logout_user(request):
     return redirect('home')
 
 
-class RecipeAPIView(generics.ListAPIView):
+# class RecipeViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
+#                     mixins.DestroyModelMixin, mixins.ListModelMixin, GenericViewSet):
+#
+#     queryset = Recipe.objects.all()
+#     serializer_class = RecipeSerializer
+
+
+class RecipeAPIList(generics.ListCreateAPIView):
     queryset = Recipe.objects.all()
-    # serializer_class =
+    serializer_class = RecipeSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    # pagination_class = RecipeAPIListPagination
 
 
+class RecipeAPIUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+    # authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAdminUser, IsOwnerOrReadOnly)
+
+
+class RecipeAPIDestroy(generics.RetrieveDestroyAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+    permission_classes = (IsAdminOrReadOnly,)
